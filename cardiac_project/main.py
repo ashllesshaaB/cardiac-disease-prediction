@@ -35,7 +35,7 @@ model.add(Dense(1, activation='sigmoid'))
 
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
-# train + store history
+# train
 history = model.fit(X_train, y_train, epochs=20, batch_size=10, verbose=0)
 
 # accuracy
@@ -44,7 +44,7 @@ loss, accuracy = model.evaluate(X_test, y_test, verbose=0)
 # GUI
 root = tk.Tk()
 root.title("❤️ Heart Disease Predictor")
-root.geometry("520x650")
+root.geometry("520x780")
 root.configure(bg="#e8f0fe")
 
 # title
@@ -100,7 +100,7 @@ for col in df.columns[:-1]:
         entries[col] = combo
     else:
         entry = tk.Entry(row, width=20)
-        entry.insert(0, "50")
+        entry.insert(0, "120" if col == "trestbps" else "200" if col == "chol" else "50")
         entry.pack(side=tk.RIGHT)
         entries[col] = entry
 
@@ -117,19 +117,45 @@ def predict():
             values.append(float(val))
 
         values = np.array(values).reshape(1, -1)
-        values = scaler.transform(values)
+        scaled_values = scaler.transform(values)
 
-        prediction = model.predict(values)
+        prediction = model.predict(scaled_values)
+        risk = float(prediction[0][0]) * 100
 
-        if prediction > 0.5:
-            result_label.config(text="⚠ High Risk of Heart Disease", fg="red")
+        # result
+        if risk > 50:
+            result_label.config(text=f"⚠ High Risk ({round(risk,2)}%)", fg="red")
+            summary = "Patient shows high risk due to factors like age, cholesterol or blood pressure."
         else:
-            result_label.config(text="✅ Low Risk", fg="green")
+            result_label.config(text=f"✅ Low Risk ({round(risk,2)}%)", fg="green")
+            summary = "Patient appears to have low risk based on provided health parameters."
+
+        summary_label.config(text=summary)
+
+        # feature importance
+        important = []
+
+        if values[0][4] > 200:
+            important.append("Cholesterol")
+
+        if values[0][3] > 130:
+            important.append("Blood Pressure")
+
+        if values[0][0] > 50:
+            important.append("Age")
+
+        if important:
+            importance_label.config(text="Important Factors: " + ", ".join(important))
+        else:
+            importance_label.config(text="Important Factors: None")
+
+        # risk meter
+        progress['value'] = risk
 
     except:
         result_label.config(text="⚠ Enter valid inputs", fg="orange")
 
-# graph function
+# graph
 def show_graph():
     plt.plot(history.history['accuracy'])
     plt.title("Model Accuracy")
@@ -148,6 +174,19 @@ tk.Button(root, text="Show Accuracy Graph", command=show_graph,
 
 # result
 result_label = tk.Label(root, text="", font=("Arial", 14, "bold"), bg="#e8f0fe")
-result_label.pack(pady=15)
+result_label.pack(pady=10)
+
+# summary
+summary_label = tk.Label(root, text="", font=("Arial", 10), wraplength=400, bg="#e8f0fe")
+summary_label.pack(pady=5)
+
+# feature importance
+importance_label = tk.Label(root, text="", font=("Arial", 10, "bold"), bg="#e8f0fe")
+importance_label.pack(pady=5)
+
+# progress bar (risk meter)
+progress = ttk.Progressbar(root, orient="horizontal",
+                           length=300, mode="determinate")
+progress.pack(pady=10)
 
 root.mainloop()
