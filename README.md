@@ -2,18 +2,19 @@
 
 ## 📌 Overview
 
-This project is a machine learning application that predicts whether a person is at risk of heart disease based on medical parameters. It uses a Neural Network model and provides a user-friendly GUI for interaction.
+This project is a machine learning-based application that predicts the risk of heart disease using a Neural Network model. It provides an interactive GUI where users can input patient data and receive real-time predictions along with risk analysis and explanations.
 
 ---
 
 ## 🚀 Features
 
-* Predicts heart disease (Yes/No)
-* Neural Network model built using TensorFlow/Keras
-* Achieves ~85% accuracy
-* Interactive GUI using Tkinter
-* Dropdown inputs for better usability
-* Accuracy visualization using graph
+* 🔢 Predicts heart disease risk (High / Low)
+* 📊 Displays **Risk Percentage (%)**
+* 🧠 AI-based **Patient Summary (LLM-inspired explanation)**
+* 🔍 **Feature Importance (Explainability module)**
+* 📈 Training Accuracy Graph visualization
+* 🎨 User-friendly GUI built using Tkinter
+* 📉 Visual **Risk Meter (Progress Bar)**
 
 ---
 
@@ -31,7 +32,13 @@ This project is a machine learning application that predicts whether a person is
 ## 📊 Dataset
 
 * Heart Disease Dataset (CSV format)
-* Contains features like age, cholesterol, blood pressure, etc.
+* Contains medical attributes such as:
+
+  * Age
+  * Cholesterol
+  * Blood Pressure
+  * Heart Rate
+  * ECG results
 
 ---
 
@@ -41,13 +48,13 @@ This project is a machine learning application that predicts whether a person is
 
 ### 2. Install required libraries
 
-```
+```bash
 py -3.11 -m pip install pandas numpy matplotlib seaborn scikit-learn tensorflow
 ```
 
 ### 3. Run the project
 
-```
+```bash
 py -3.11 main.py
 ```
 
@@ -55,19 +62,34 @@ py -3.11 main.py
 
 ## 🖥️ Output
 
-* Displays prediction:
-  ✅ Low Risk
-  ❌ High Risk of Heart Disease
-* Shows model accuracy (~85%)
-* Graph of training accuracy
+* Displays:
+
+  * ✅ Low Risk / ❌ High Risk
+  * 📊 Risk Percentage
+  * 🧠 AI-generated summary
+  * 🔍 Important contributing factors
+  * 📈 Accuracy graph
+  * 📉 Visual risk meter
 
 ---
 
-## 🎯 Future Improvements
+## 🔄 Latest Updates
 
-* Web-based interface
-* Real-time patient data integration
-* More advanced deep learning models
+* Added Risk Percentage calculation
+* Added AI Patient Summary
+* Implemented Feature Importance (Explainability)
+* Added Risk Meter (Progress Bar)
+* Improved GUI design and usability
+
+---
+
+## 🎯 Future Scope
+
+* Integration with real-time medical data
+* Web-based dashboard (React)
+* Advanced explainability using SHAP
+* Deep learning models like CNN for ECG data
+* Integration with AI models for detailed medical insights
 
 ---
 
@@ -79,4 +101,4 @@ Ashlesha Badgujar
 
 ## ⭐ Note
 
-This project is developed for academic purposes and demonstrates the use of machine learning in healthcare prediction.
+This project demonstrates the application of machine learning and neural networks in healthcare prediction and includes advanced features like explainability and user interaction.
